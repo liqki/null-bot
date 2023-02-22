@@ -1,0 +1,22 @@
+{
+  "name": "bot-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run deployCommands && node index.js",
+    "dev": "npm run deployCommands && nodemon index.js",
+    "deployCommands": "node deployCommands.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.7.0",
+    "discordjs-reaction-role": "^3.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "ping-monitor": "^0.7.0"
+  }
+}
