@@ -1,4 +1,4 @@
-const { Events, EmbedBuilder } = require("discord.js");
+const { Events, EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const mcs = require("node-mcstatus");
 
 module.exports = {
@@ -15,18 +15,21 @@ module.exports = {
             .statusJava(host)
             .then((res) => {
               const { online, players, version, icon } = res;
-              console.log(online, players, version);
               const embed = new EmbedBuilder()
                 .setTitle("Server Status")
-                .addFields({ name: "Online", value: online ? "yes" : "no" }, { name: "Players", value: players.online + "/" + players.max }, { name: "Version", value: version.name_clean })
-                .setThumbnail(icon)
+                .addFields(
+                  { name: "Online", value: online ? "yes (" + host + ")" : "no" },
+                  { name: "Players", value: players.online + "/" + players.max },
+                  { name: "Version", value: version.name_clean }
+                )
+                .setThumbnail("https://img.itch.zone/aW1nLzM2MjgwMDAuZ2lm/315x250%23cm/qzKdcP.gif")
                 .setColor(online ? "Green" : "Red");
               msg.edit({ embeds: [embed] });
             })
             .catch((err) => {
               console.log(err);
             });
-        }, 10000);
+        }, 5000);
       });
     }
   },
