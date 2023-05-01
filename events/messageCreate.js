@@ -14,16 +14,26 @@ module.exports = {
           mcs
             .statusJava(host)
             .then((res) => {
-              const { online, players, version, icon } = res;
-              const embed = new EmbedBuilder()
-                .setTitle("Server Status")
-                .addFields(
-                  { name: "Online", value: online ? "yes (" + host + ")" : "no" },
-                  { name: "Players", value: players.online + "/" + players.max },
-                  { name: "Version", value: version.name_clean }
-                )
-                .setThumbnail("https://img.itch.zone/aW1nLzM2MjgwMDAuZ2lm/315x250%23cm/qzKdcP.gif")
-                .setColor(online ? "Green" : "Red");
+              const { online, players, version } = res;
+              const embed = new EmbedBuilder();
+              if (online) {
+                embed
+                  .setTitle("Server Status")
+                  .addFields(
+                    { name: "Online", value: "yes", inline: true },
+                    { name: "IP", value: host, inline: true },
+                    { name: "Players", value: players.online + "/" + players.max },
+                    { name: "Version", value: version.name_clean }
+                  )
+                  .setThumbnail("https://img.itch.zone/aW1nLzM2MjgwMDAuZ2lm/315x250%23cm/qzKdcP.gif")
+                  .setColor("Green");
+              } else {
+                embed
+                  .setTitle("Server Status")
+                  .addFields({ name: "Online", value: "no" }, { name: "IP", value: host, inline: true })
+                  .setThumbnail("https://img.itch.zone/aW1nLzM2MjgwMDAuZ2lm/315x250%23cm/qzKdcP.gif")
+                  .setColor("Red");
+              }
               msg.edit({ embeds: [embed] });
             })
             .catch((err) => {
